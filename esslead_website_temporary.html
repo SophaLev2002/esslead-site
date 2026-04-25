@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>esslead — AI-powered clinical trial management platform</title>
+<meta name="description" content="The operating system for Site Management Organizations. AI-powered recruitment, document automation, and payment infrastructure — built for the people who actually run clinical trials.">
+
+<!-- Geist font family from Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F4F0;
+    --surface: #FFFFFF;
+    --ink: #1A1A1A;
+    --ink-soft: #555555;
+    --ink-faint: #888888;
+    --line: #E5E3DB;
+    --line-soft: #EEEBE3;
+
+    --green: #0DA562;
+    --green-bright: #3BF598;
+    --green-tint: #EBFBF3;
+    --purple: #7C3AED;
+    --blue: #1E40AF;
+    --magenta: #BE185D;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Geist", "Inter", system-ui, -apple-system, sans-serif;
+    font-feature-settings: "ss01" 1, "cv11" 1;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Numbers — Geist Mono with tabular figures */
+  .mono, .stat-val, .feature-stat {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1, "zero" 1;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* Top nav */
+  nav {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  .logo-dot { color: var(--green-bright); }
+  nav .meta {
+    font-size: 13px;
+    color: var(--ink-soft);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  nav .meta a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  nav .meta a:hover { color: var(--ink); }
+
+  /* Hero */
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    color: var(--purple);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero h1 .accent { color: var(--green-bright); }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin: 0 auto 48px;
+    line-height: 1.55;
+  }
+
+  /* Animated Coming Soon */
+  .coming-soon {
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    padding: 14px 28px;
+    background: var(--ink);
+    border-radius: 100px;
+    margin-bottom: 14px;
+  }
+  .pulse-dot {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--green-bright);
+  }
+  .pulse-dot::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--green-bright);
+    opacity: 0.5;
+    animation: pulse 2s ease-out infinite;
+  }
+  @keyframes pulse {
+    0%   { transform: scale(0.5); opacity: 0.6; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+  .coming-soon-text {
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .launch-info {
+    font-size: 13px;
+    color: var(--ink-faint);
+    margin-bottom: 56px;
+  }
+
+  /* CTA buttons */
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: #FFFFFF;
+  }
+  .btn-primary:hover {
+    background: #000;
+    transform: translateY(-1px);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn-secondary:hover {
+    border-color: var(--ink);
+  }
+  .btn .arrow {
+    transition: transform 0.2s;
+  }
+  .btn:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  /* Section title */
+  .section {
+    padding: 80px 0;
+    border-top: 1px solid var(--line);
+  }
+  .section-eyebrow {
+    font-size: 12px;
+    color: var(--purple);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: 16px;
+  }
+  .section h2 {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    max-width: 720px;
+  }
+  .section-sub {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 620px;
+    line-height: 1.55;
+    margin-bottom: 56px;
+  }
+
+  /* Feature grid - the big one */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .feature-card:hover {
+    border-color: var(--ink);
+    transform: translateY(-2px);
+  }
+  .feature-card .feature-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    align-self: flex-start;
+  }
+  .feature-card.module .feature-tag {
+    background: var(--green-tint);
+    color: var(--green);
+  }
+  .feature-card.service .feature-tag {
+    background: #F3F0FE;
+    color: var(--purple);
+  }
+  .feature-card.infra .feature-tag {
+    background: #EFF1FE;
+    color: var(--blue);
+  }
+  .feature-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+  .feature-card p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 16px;
+    flex-grow: 1;
+  }
+  .feature-stat {
+    font-size: 13px;
+    color: var(--green);
+    font-weight: 600;
+    padding-top: 12px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  /* Stats strip */
+  .stats-strip {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+  .stat {
+    text-align: left;
+  }
+  .stat-val {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* Founding partner block */
+  .partner-block {
+    background: var(--ink);
+    color: #FFFFFF;
+    border-radius: 16px;
+    padding: 56px 48px;
+    margin-top: 32px;
+  }
+  .partner-block .section-eyebrow { color: var(--green-bright); }
+  .partner-block h2 { color: #FFFFFF; }
+  .partner-block .section-sub {
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 32px;
+  }
+  .partner-perks {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .perk {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .perk-num {
+    font-family: "Geist Mono", monospace;
+    font-size: 14px;
+    color: var(--green-bright);
+    font-weight: 600;
+    min-width: 24px;
+  }
+  .perk-text strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .perk-text span {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.5;
+  }
+  .partner-cta {
+    background: var(--green-bright);
+    color: var(--ink);
+    padding: 14px 28px;
+    font-weight: 600;
+  }
+  .partner-cta:hover {
+    background: #FFFFFF;
+  }
+
+  /* Investor section - the 15% */
+  .investor-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .investor-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 32px;
+  }
+  .investor-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .investor-card p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  .investor-card a {
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.6);
+    padding: 48px 0 32px;
+    margin-top: 80px;
+  }
+  footer .container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+  }
+  footer .brand {
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  footer p {
+    font-size: 13px;
+    line-height: 1.6;
+    max-width: 320px;
+  }
+  footer h4 {
+    color: #FFFFFF;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  footer ul { list-style: none; }
+  footer li {
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  footer a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  footer a:hover { color: #FFFFFF; }
+  .footer-bottom {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+    font-size: 12px;
+  }
+
+  /* Modal overlay */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 24px;
+    animation: fadeIn 0.2s ease-out;
+  }
+  .modal-overlay.active {
+    display: flex;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .modal {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 520px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideUp 0.25s ease-out;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--ink-faint);
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .modal-close:hover {
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .modal h3 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .modal p.modal-sub {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  /* Form */
+  .form-field {
+    margin-bottom: 18px;
+  }
+  .form-field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--ink);
+    background: var(--surface);
+    transition: border-color 0.15s;
+  }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    outline: none;
+    border-color: var(--ink);
+  }
+  .form-field textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .form-submit {
+    width: 100%;
+    margin-top: 8px;
+    justify-content: center;
+  }
+  .form-success {
+    text-align: center;
+    padding: 24px 0;
+  }
+  .form-success .check {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--green-tint);
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .form-success h3 {
+    margin-bottom: 8px;
+  }
+  .form-success p {
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  @media (max-width: 600px) {
+    .modal { padding: 28px 24px; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 880px) {
+    .hero h1 { font-size: 36px; }
+    .hero-sub { font-size: 16px; }
+    .section h2 { font-size: 28px; }
+    .problem-grid,
+    .feature-grid,
+    .stats-strip,
+    .partner-perks,
+    .investor-row { grid-template-columns: 1fr; }
+    .stats-strip { padding: 24px; }
+    .partner-block { padding: 32px 24px; }
+    footer .container { grid-template-columns: 1fr; }
+    nav .meta { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="logo">esslead<span class="logo-dot">.</span></div>
+    <div class="meta">
+      <a href="#features">Platform</a>
+      <a href="#partners">Founding partners</a>
+      <a href="#investors">Investors</a>
+      <a href="mailto:joseph@esslead.com">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">For Site Management Organizations</div>
+    <h1>The operating system <span class="accent">SMOs should have had</span> a decade ago.</h1>
+    <p class="hero-sub">esslead is the AI-powered platform that replaces fragmented tools, manual paperwork, and enterprise pricing — purpose-built for the people who actually run clinical trials.</p>
+
+    <div class="coming-soon">
+      <div class="pulse-dot"></div>
+      <span class="coming-soon-text">Coming Soon</span>
+    </div>
+    <div class="launch-info">Platform launches Q3 2026 · Founding partner spots now reserved</div>
+
+    <div class="cta-row">
+      <button onclick="openModal('partner')" class="btn btn-primary">
+        Become a founding partner
+        <span class="arrow">→</span>
+      </button>
+      <button onclick="openModal('demo')" class="btn btn-secondary">
+        Request demo
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Features / Platform -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-eyebrow">The Platform</div>
+    <h2>One platform. Everything an SMO needs to run modern clinical trials.</h2>
+    <p class="section-sub">Modular by design — start with what you need, add modules as you scale. Enterprise-grade infrastructure, accessible pricing from $2,500/month.</p>
+
+    <div class="feature-grid">
+
+      <!-- Core modules -->
+      <div class="feature-card module">
+        <span class="feature-tag">Module</span>
+        <h3>AI Recruitment Engine</h3>
+        <p>Auto-screens your entire patient database, determines protocol eligibility, and makes initial screening calls. Reads structured and unstructured EMR data — progress notes, faxes, PDFs.</p>
+        <div class="feature-stat">60% faster enrollment</div>
+      </div>
+
+      <div class="feature-card module">
+        <span class="feature-tag">Module</span>
+        <h3>Document AI Intelligence</h3>
+        <p>AI parses protocols and patient charts automatically. Auto-populates patient records and CRFs. CDISC TMF-aligned document management with SMO-native hierarchy.</p>
+        <div class="feature-stat">&gt;80% time saved on paperwork</div>
+      </div>
+
+      <div class="feature-card module">
+        <span class="feature-tag">Module</span>
+        <h3>Trial Operations Hub</h3>
+        <p>Real-time milestone tracking, visit scheduling, and trial-wide coordination. One command center across every protocol, every site, every sponsor.</p>
+        <div class="feature-stat">Trial-wide visibility</div>
+      </div>
+
+      <div class="feature-card module">
+        <span class="feature-tag">Module</span>
+        <h3>Integrated Payment Hub</h3>
+        <p>Auto-generates invoices when trial events occur. Sponsor-to-site payment orchestration with automatic reconciliation. Zero manual billing overhead.</p>
+        <div class="feature-stat">Paid in 30 days vs. 90</div>
+      </div>
+
+      <div class="feature-card module">
+        <span class="feature-tag">Module</span>
+        <h3>Intelligent Patient Database</h3>
+        <p>One centralized active patient database. Match patients across all open trials. AI ranks candidates by protocol fit and historical engagement.</p>
+        <div class="feature-stat">Multi-trial matching</div>
+      </div>
+
+      <div class="feature-card module">
+        <span class="feature-tag">Module</span>
+        <h3>Business Development Suite</h3>
+        <p>Integrated sponsor outreach, opportunity tracking, and proposal management. Built for SMO growth teams that need to win more trials, not just run them.</p>
+        <div class="feature-stat">Pipeline to proposal</div>
+      </div>
+
+      <!-- Services -->
+      <div class="feature-card service">
+        <span class="feature-tag">Service</span>
+        <h3>Protocol Parsing</h3>
+        <p>Submit any protocol PDF — receive structured eligibility criteria, visit schedules, and budget breakdowns ready to deploy. Per-protocol pricing.</p>
+        <div class="feature-stat">Hours of work in minutes</div>
+      </div>
+
+      <div class="feature-card service">
+        <span class="feature-tag">Service</span>
+        <h3>eSource Generation</h3>
+        <p>Automated electronic source document generation from your visit data. Audit-ready, regulator-compliant, sponsor-formatted.</p>
+        <div class="feature-stat">Per-site monthly</div>
+      </div>
+
+      <div class="feature-card service">
+        <span class="feature-tag">Service</span>
+        <h3>Patient Dataset Compilation</h3>
+        <p>On-demand structured datasets compiled from your patient records — for sponsor reporting, regulatory submissions, or internal analytics.</p>
+        <div class="feature-stat">Per-patient pricing</div>
+      </div>
+
+      <!-- Infrastructure -->
+      <div class="feature-card infra">
+        <span class="feature-tag">Infrastructure</span>
+        <h3>HIPAA-Compliant Architecture</h3>
+        <p>End-to-end encryption, role-based access, full audit logs. Built on AWS with regional redundancy and 21 CFR Part 11-ready architecture.</p>
+        <div class="feature-stat">Audit-ready from day one</div>
+      </div>
+
+      <div class="feature-card infra">
+        <span class="feature-tag">Infrastructure</span>
+        <h3>EMR &amp; Sponsor Integrations</h3>
+        <p>Connect to Epic, Cerner, and other EMRs. Bi-directional sync with sponsor systems and contact tools like Apollo for outreach.</p>
+        <div class="feature-stat">Bi-directional sync</div>
+      </div>
+
+      <div class="feature-card infra">
+        <span class="feature-tag">Infrastructure</span>
+        <h3>Modular Pricing</h3>
+        <p>Buy only the modules you need. Add more as you scale. Per-patient performance fees on recruitment. No six-figure annual contracts required.</p>
+        <div class="feature-stat">From $2,500/month</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Stats strip -->
+<section class="section">
+  <div class="container">
+    <div class="section-eyebrow">Why It Matters</div>
+    <h2>A mid-size SMO using esslead can unlock $10M+ in additional enrolled trials annually.</h2>
+    <p class="section-sub">Not by adding sites or hiring coordinators — by removing the operational friction that caps your current capacity.</p>
+
+    <div class="stats-strip">
+      <div class="stat">
+        <div class="stat-val">60%</div>
+        <div class="stat-label">Faster enrollment</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">80%</div>
+        <div class="stat-label">Less paperwork</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">30 days</div>
+        <div class="stat-label">To get paid (vs. 90)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">$10M+</div>
+        <div class="stat-label">Annual capacity unlocked</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Founding Partners -->
+<section class="section" id="partners">
+  <div class="container">
+    <div class="partner-block">
+      <div class="section-eyebrow">Founding Partner Program</div>
+      <h2>Help us shape the platform. Lock in transformational economics for life.</h2>
+      <p class="section-sub">We're reserving exclusive spots for mid-size SMOs to become founding clients when esslead launches Q3 2026. In exchange for real-world validation, you receive permanent preferred pricing, a direct line to the founding team, and the ability to shape what we build.</p>
+
+      <div class="partner-perks">
+        <div class="perk">
+          <div class="perk-num">01</div>
+          <div class="perk-text">
+            <strong>50% off during pilot phase</strong>
+            <span>Full platform access — every module included — at half price during the validation period.</span>
+          </div>
+        </div>
+        <div class="perk">
+          <div class="perk-num">02</div>
+          <div class="perk-text">
+            <strong>Permanent founding-member pricing</strong>
+            <span>Locked preferred rates that never increase — even as our standard pricing scales with the platform.</span>
+          </div>
+        </div>
+        <div class="perk">
+          <div class="perk-num">03</div>
+          <div class="perk-text">
+            <strong>Shape the product roadmap</strong>
+            <span>Your operational pain points become our top engineering priorities. Direct input into every release.</span>
+          </div>
+        </div>
+        <div class="perk">
+          <div class="perk-num">04</div>
+          <div class="perk-text">
+            <strong>White-glove implementation</strong>
+            <span>Dedicated founding team support throughout onboarding, deployment, and your first year of operations.</span>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="openModal('partner')" class="btn partner-cta">
+        Reserve a founding partner spot
+        <span class="arrow">→</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Investor section - the 15% -->
+<section class="section" id="investors">
+  <div class="container">
+    <div class="section-eyebrow">For Investors</div>
+    <h2>Built by operators who've lived the problem.</h2>
+    <p class="section-sub">esslead is led by a team combining clinical trial domain expertise with deep AI capability — the combination CTMS has been missing. We're actively raising our seed round.</p>
+
+    <div class="investor-row">
+      <div class="investor-card">
+        <h3>The team</h3>
+        <p><strong>Joseph Mooney — CEO &middot; Clinical.</strong> Former Clinical Research Coordinator at Yale. MS in neural engineering at the University of Miami. Previously operator at two clinical-trial-tech startups.</p>
+        <p><strong>Sofya Levitina — COO &middot; AI Scientist.</strong> Computational modeling and astrophysics (5+ yrs). AI scientist at a biotech firm working on aging and Alzheimer's. Clinical trial data architect with a sponsor-side perspective.</p>
+      </div>
+      <div class="investor-card">
+        <h3>The opportunity</h3>
+        <p>$200M US SMO software market, growing 12–14% annually. We are the only platform combining AI-native recruitment, document automation, and modular pricing — built for the buyer enterprise CTMS has ignored.</p>
+        <p>Active seed round underway. Pitch deck and financials available on request.</p>
+        <a href="mailto:joseph@esslead.com?subject=Investor%20inquiry">Request investor materials →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div>
+      <div class="brand">esslead<span style="color: var(--green-bright);">.</span></div>
+      <p>The AI-powered clinical trial management platform purpose-built for Site Management Organizations and the independent sites that run alongside them.</p>
+    </div>
+    <div>
+      <h4>Platform</h4>
+      <ul>
+        <li><a href="#features">Modules</a></li>
+        <li><a href="#features">Services</a></li>
+        <li><a href="#features">Infrastructure</a></li>
+        <li><a href="mailto:contact@esslead.com?subject=Pricing%20inquiry">Pricing</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:joseph@esslead.com">joseph@esslead.com</a></li>
+        <li><a href="mailto:sofya@esslead.com">sofya@esslead.com</a></li>
+        <li><a href="#partners">Founding partners</a></li>
+        <li><a href="#investors">Investors</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom container">
+    &copy; 2026 esslead. All rights reserved. &middot; Miami, FL &middot; Delaware C-corp
+  </div>
+</footer>
+
+<!-- Modals -->
+<div class="modal-overlay" id="modal-partner" onclick="closeModalOnBackdrop(event, 'partner')">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('partner')" aria-label="Close">×</button>
+    <div id="partner-form-content">
+      <h3>Reserve a founding partner spot</h3>
+      <p class="modal-sub">Tell us about your SMO. We'll be in touch within 48 hours to discuss founding partner terms and reserve your spot for the Q3 2026 launch.</p>
+
+      <form id="partner-form" action="https://formspree.io/f/REPLACE_WITH_PARTNER_FORM_ID" method="POST">
+        <input type="hidden" name="_subject" value="New founding partner inquiry">
+        <input type="hidden" name="form_type" value="Founding Partner">
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="p-name">Full name</label>
+            <input type="text" id="p-name" name="name" required>
+          </div>
+          <div class="form-field">
+            <label for="p-title">Title</label>
+            <input type="text" id="p-title" name="title" required placeholder="e.g. Director of Operations">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="p-company">SMO / Company</label>
+          <input type="text" id="p-company" name="company" required>
+        </div>
+
+        <div class="form-field">
+          <label for="p-email">Work email</label>
+          <input type="email" id="p-email" name="email" required>
+        </div>
+
+        <div class="form-field">
+          <label for="p-contact">Preferred contact method</label>
+          <select id="p-contact" name="contact_method">
+            <option value="Email">Email</option>
+            <option value="Phone call">Phone call</option>
+            <option value="Video call">Video call (Zoom / Meet)</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="p-notes">Anything else? (optional)</label>
+          <textarea id="p-notes" name="notes" placeholder="Number of sites, current pain points, timeline, etc."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary form-submit">
+          Send inquiry
+          <span class="arrow">→</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-demo" onclick="closeModalOnBackdrop(event, 'demo')">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('demo')" aria-label="Close">×</button>
+    <div id="demo-form-content">
+      <h3>Request a demo</h3>
+      <p class="modal-sub">See esslead in action. We'll send a personalized walkthrough or schedule a live demo with the founding team.</p>
+
+      <form id="demo-form" action="https://formspree.io/f/REPLACE_WITH_DEMO_FORM_ID" method="POST">
+        <input type="hidden" name="_subject" value="New demo request">
+        <input type="hidden" name="form_type" value="Demo Request">
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="d-name">Full name</label>
+            <input type="text" id="d-name" name="name" required>
+          </div>
+          <div class="form-field">
+            <label for="d-title">Title</label>
+            <input type="text" id="d-title" name="title" required>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="d-company">Company</label>
+          <input type="text" id="d-company" name="company" required>
+        </div>
+
+        <div class="form-field">
+          <label for="d-email">Work email</label>
+          <input type="email" id="d-email" name="email" required>
+        </div>
+
+        <div class="form-field">
+          <label for="d-contact">Preferred contact method</label>
+          <select id="d-contact" name="contact_method">
+            <option value="Email">Email</option>
+            <option value="Phone call">Phone call</option>
+            <option value="Video call">Video call (Zoom / Meet)</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="d-notes">What would you like to see? (optional)</label>
+          <textarea id="d-notes" name="notes" placeholder="Specific modules, use cases, integration questions..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary form-submit">
+          Send request
+          <span class="arrow">→</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal(type) {
+    document.getElementById('modal-' + type).classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(type) {
+    document.getElementById('modal-' + type).classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOnBackdrop(event, type) {
+    if (event.target.classList.contains('modal-overlay')) {
+      closeModal(type);
+    }
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeModal('partner');
+      closeModal('demo');
+    }
+  });
+
+  ['partner-form', 'demo-form'].forEach(function(formId) {
+    var form = document.getElementById(formId);
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var originalHTML = submitBtn.innerHTML;
+      submitBtn.innerHTML = 'Sending...';
+      submitBtn.disabled = true;
+
+      try {
+        var response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          var contentDiv = form.parentElement;
+          contentDiv.innerHTML =
+            '<div class="form-success">' +
+              '<div class="check">✓</div>' +
+              '<h3>Got it — thank you</h3>' +
+              '<p>We\'ll be in touch within 48 hours.<br>You can reach us directly at joseph@esslead.com.</p>' +
+            '</div>';
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (err) {
+        submitBtn.innerHTML = originalHTML;
+        submitBtn.disabled = false;
+        alert('Something went wrong. Please email joseph@esslead.com directly.');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
