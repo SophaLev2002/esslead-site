@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>esslead — AI-powered clinical trial management platform</title>
 <meta name="description" content="The operating system for Site Management Organizations. AI-powered recruitment, document automation, and payment infrastructure — built for the people who actually run clinical trials.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
 
 <!-- Geist font family from Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +25,7 @@
     --line: #E5E3DB;
     --line-soft: #EEEBE3;
 
-    --green: #0DA562;
+    --green: #10C977;
     --green-bright: #3BF598;
     --green-tint: #EBFBF3;
     --purple: #7C3AED;
@@ -231,6 +233,7 @@
     margin-bottom: 16px;
     max-width: 720px;
   }
+  .section h2 .accent { color: var(--green-bright); }
   .section-sub {
     font-size: 17px;
     color: var(--ink-soft);
@@ -834,6 +837,231 @@
   margin-bottom: 18px;
   display: block;
 }
+ /* Audience tab bar */
+.audience-tabs {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.audience-tab {
+  padding: 10px 20px;
+  border-radius: 100px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.audience-tab:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.audience-tab.active {
+  background: var(--ink);
+  color: #FFFFFF;
+  border-color: var(--ink);
+}
+
+/* Feature grid (existing system + slight tightening) */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.feature-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+.feature-card:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+}
+.feature-card .feature-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  align-self: flex-start;
+}
+.feature-card.module .feature-tag {
+  background: var(--green-tint);
+  color: var(--green);
+}
+.feature-card.service .feature-tag {
+  background: #F3F0FE;
+  color: var(--purple);
+}
+.feature-card.infra .feature-tag {
+  background: #EFF1FE;
+  color: var(--blue);
+}
+.feature-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+}
+.feature-card p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+.feature-card .feature-stat {
+  font-size: 13px;
+  color: var(--green);
+  font-weight: 600;
+  padding-top: 12px;
+  border-top: 1px solid var(--line-soft);
+}
+
+/* Feature card collapsed/expanded states */
+.feature-card {
+  cursor: pointer;
+}
+.feature-card .feature-desc {
+  max-height: 0;
+  overflow: hidden;
+  margin-bottom: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin-bottom 0.3s ease;
+}
+.feature-card.expanded .feature-desc {
+  max-height: 240px;
+  margin-bottom: 16px;
+  opacity: 1;
+}
+.feature-card .expand-indicator {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--ink-faint);
+  transition: transform 0.25s ease;
+  pointer-events: none;
+  font-weight: 300;
+}
+.feature-card.expanded .expand-indicator {
+  transform: rotate(45deg);
+}
+.feature-card { position: relative; }
+
+/* Audience pane fade transition */
+.audience-pane {
+  display: none;
+}
+.audience-pane.active {
+  display: block;
+  animation: fadeInPane 0.25s ease-out;
+}
+@keyframes fadeInPane {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile */
+@media (max-width: 880px) {
+  .feature-grid { grid-template-columns: 1fr; }
+  .audience-tabs { justify-content: flex-start; }
+  .audience-tab { font-size: 12px; padding: 8px 14px; }
+}
+
+/* Problem card brick image — single source, CSS-cropped to slice */
+.problem-card .brick-img {
+  width: 110px;
+  height: 30px;
+  background-image: url('bricks/bricks_row.png.png');
+  background-repeat: no-repeat;
+  background-size: 500px auto;
+  margin-bottom: 18px;
+  display: block;
+}
+.problem-card.accent-blue    .brick-img { background-position: 0 center; }
+.problem-card.accent-purple  .brick-img { background-position: -125px center; }
+.problem-card.accent-green   .brick-img { background-position: -250px center; }
+.problem-card.accent-magenta .brick-img { background-position: -380px center; }
+
+/* Vision diagram */
+.vision-diagram {
+  max-width: 1000px;
+  margin: 0 auto 48px;
+  padding: 20px 0;
+}
+.vision-diagram svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Pull quote below */
+.vision-quote {
+  text-align: center;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 26px;
+  line-height: 1.4;
+  color: var(--ink);
+  max-width: 680px;
+  margin: 56px auto 0;
+}
+
+/* Vision diagram — interactive hover */
+.vision-diagram svg .vd-node {
+  cursor: pointer;
+  transform-origin: center center;
+  transform-box: fill-box;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+.vision-diagram svg .vd-node:hover {
+  transform: scale(1.04);
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.12));
+}
+.vision-diagram svg .vd-node:hover rect {
+  stroke-opacity: 1;
+}
+.vision-caption {
+  position: relative;
+  max-width: 760px;
+  margin: 48px auto 0;
+  padding: 4px 0 4px 28px;
+  border-left: 3px solid var(--green);
+  font-family: Georgia, serif;
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ink);
+  font-style: italic;
+}
+.vision-caption strong {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--ink);
+  font-family: "Geist", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 880px) {
+  .vision-quote { font-size: 22px; }
+}
 
 </style>
 </head>
@@ -855,7 +1083,7 @@
   <div class="container">
     <div class="hero-eyebrow">For Site Management Organizations</div>
     <h1>Clinical trial recruitment, <span class="accent"> redesigned </span> at the network layer.</h1>
-    <p class="hero-sub">Connecting the patients, the sites, and the sponsors through one intelligence engine.</p>
+    <p class="hero-sub">Connecting patients, sites, and sponsors through one intelligence engine.</p>
 
     <div class="coming-soon">
       <div class="pulse-dot"></div>
@@ -884,25 +1112,25 @@
 
     <div class="problem-grid">
       <div class="problem-card accent-blue">
-        <img src="/bricks/brick-blue.png" alt="" class="brick-img">
+        <div class="brick-img"></div>
         <div class="card-stat">$87B</div>
         <div class="card-title">Global clinical trial market</div>
         <div class="card-desc">Growing to $150B by 2034. Recruitment is the single largest cost driver — and the segment where AI is growing fastest, at 27% annually.</div>
       </div>
       <div class="problem-card accent-purple">
-        <img src="/bricks/brick-purple.png" alt="" class="brick-img">
+        <div class="brick-img"></div>
         <div class="card-stat">80%</div>
         <div class="card-title">of trials miss enrollment timelines</div>
         <div class="card-desc">Sponsor delay costs run $600K to $8M per day. Recruitment is the bottleneck — not the science, not the regulators, not the protocol.</div>
       </div>
       <div class="problem-card accent-green">
-        <img src="/bricks/brick-green.png" alt="" class="brick-img">
+        <div class="brick-img"></div>
         <div class="card-stat">85%</div>
         <div class="card-title">of patients never know an eligible trial exists</div>
         <div class="card-desc">Eligible patients sit in community practices and regional hospitals with no infrastructure connecting them to the research sites that need them.</div>
       </div>
       <div class="problem-card accent-magenta">
-        <img src="/bricks/brick-magenta.png" alt="" class="brick-img">
+        <div class="brick-img"></div>
         <div class="card-stat">$500M+</div>
         <div class="card-title">cost of a single late-stage trial</div>
         <div class="card-desc">Phase III protocols routinely exceed half a billion dollars. The recruitment intelligence layer that protects this investment does not yet exist.</div>
@@ -915,9 +1143,8 @@
 <section class="section" id="platform">
   <div class="container">
     <div class="section-eyebrow">The Platform</div>
-    <h2>One platform. Everything an SMO needs to run modern clinical trials.</h2>
-    <p class="section-sub">Modular by design — start with what you need, add modules as you scale. Enterprise-grade infrastructure, accessible pricing from $2,500/month.</p>
-
+    <h2>One platform. Four audiences. One network underneath.</h2>
+    <p class="section-sub">Modular by design. Start with what you need, add modules as you scale. From SMOs running portfolios of trials to patients searching for the trial that fits.</p>
     <div class="audience-tabs" role="tablist">
       <button class="audience-tab active" data-tab="smos" onclick="switchAudience('smos')">SMOs &amp; Sites</button>
       <button class="audience-tab" data-tab="practices" onclick="switchAudience('practices')">Practices &amp; Hospitals</button>
@@ -931,74 +1158,86 @@
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>AI Recruitment Engine</h3>
-          <p>Auto-screens your entire patient database, determines protocol eligibility, and makes initial screening calls. Reads structured and unstructured EMR data — progress notes, faxes, PDFs.</p>
+          <p class="feature-desc">Auto-screens your entire patient database, determines protocol eligibility, and makes initial screening calls. Reads structured and unstructured EMR data — progress notes, faxes, PDFs.</p>
           <div class="feature-stat">60% faster enrollment</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>Document AI Intelligence</h3>
-          <p>AI parses protocols and patient charts automatically. Auto-populates patient records and CRFs. CDISC TMF-aligned document management with SMO-native hierarchy.</p>
+          <p class="feature-desc">AI parses protocols and patient charts automatically. Auto-populates patient records and CRFs. CDISC TMF-aligned document management with SMO-native hierarchy.</p>
           <div class="feature-stat">&gt;80% time saved on paperwork</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>Trial Operations Hub</h3>
-          <p>Real-time milestone tracking, visit scheduling, and trial-wide coordination. One command center across every protocol, every site, every sponsor.</p>
+          <p class="feature-desc">Real-time milestone tracking, visit scheduling, and trial-wide coordination. One command center across every protocol, every site, every sponsor.</p>
           <div class="feature-stat">Trial-wide visibility</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>Integrated Payment Hub</h3>
-          <p>Auto-generates invoices when trial events occur. Sponsor-to-site payment orchestration with automatic reconciliation. Zero manual billing overhead.</p>
+          <p class="feature-desc">Auto-generates invoices when trial events occur. Sponsor-to-site payment orchestration with automatic reconciliation. Zero manual billing overhead.</p>
           <div class="feature-stat">Paid in 30 days vs. 90</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>Intelligent Patient Database</h3>
-          <p>One centralized active patient database. Match patients across all open trials. AI ranks candidates by protocol fit and historical engagement.</p>
+          <p class="feature-desc">One centralized active patient database. Match patients across all open trials. AI ranks candidates by protocol fit and historical engagement.</p>
           <div class="feature-stat">Multi-trial matching</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>Business Development Suite</h3>
-          <p>Integrated sponsor outreach, opportunity tracking, and proposal management. Built for SMO growth teams that need to win more trials, not just run them.</p>
+          <p class="feature-desc">Integrated sponsor outreach, opportunity tracking, and proposal management. Built for SMO growth teams that need to win more trials, not just run them.</p>
           <div class="feature-stat">Pipeline to proposal</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card service">
           <span class="feature-tag">Service</span>
           <h3>Protocol Parsing</h3>
-          <p>Submit any protocol PDF — receive structured eligibility criteria, visit schedules, and budget breakdowns ready to deploy. Per-protocol pricing.</p>
+          <p class="feature-desc">Submit any protocol PDF — receive structured eligibility criteria, visit schedules, and budget breakdowns ready to deploy. Per-protocol pricing.</p>
           <div class="feature-stat">Hours of work in minutes</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card service">
           <span class="feature-tag">Service</span>
           <h3>eSource Generation</h3>
-          <p>Automated electronic source document generation from your visit data. Audit-ready, regulator-compliant, sponsor-formatted.</p>
+          <p class="feature-desc">Automated electronic source document generation from your visit data. Audit-ready, regulator-compliant, sponsor-formatted.</p>
           <div class="feature-stat">Per-site monthly</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card service">
           <span class="feature-tag">Service</span>
           <h3>Patient Dataset Compilation</h3>
-          <p>On-demand structured datasets compiled from your patient records — for sponsor reporting, regulatory submissions, or internal analytics.</p>
+          <p class="feature-desc">On-demand structured datasets compiled from your patient records — for sponsor reporting, regulatory submissions, or internal analytics.</p>
           <div class="feature-stat">Per-patient pricing</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card infra">
           <span class="feature-tag">Infrastructure</span>
           <h3>HIPAA-Compliant Architecture</h3>
-          <p>End-to-end encryption, role-based access, full audit logs. Built on AWS with regional redundancy and 21 CFR Part 11-ready architecture.</p>
+          <p class="feature-desc">End-to-end encryption, role-based access, full audit logs. Built on AWS with regional redundancy and 21 CFR Part 11-ready architecture.</p>
           <div class="feature-stat">Audit-ready from day one</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card infra">
           <span class="feature-tag">Infrastructure</span>
           <h3>EMR &amp; Sponsor Integrations</h3>
-          <p>Connect to Epic, Cerner, and other EMRs. Bi-directional sync with sponsor systems and contact tools like Apollo for outreach.</p>
+          <p class="feature-desc">Connect to Epic, Cerner, and other EMRs. Bi-directional sync with sponsor systems and contact tools like Apollo for outreach.</p>
           <div class="feature-stat">Bi-directional sync</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card infra">
           <span class="feature-tag">Infrastructure</span>
           <h3>Modular Pricing</h3>
-          <p>Buy only the modules you need. Add more as you scale. Per-patient performance fees on recruitment. No six-figure annual contracts required.</p>
+          <p class="feature-desc">Buy only the modules you need. Add more as you scale. Per-patient performance fees on recruitment. No six-figure annual contracts required.</p>
           <div class="feature-stat">From $2,500/month</div>
+          <span class="expand-indicator">+</span>
         </div>
       </div>
     </div>
@@ -1009,38 +1248,44 @@
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>De-Identified Cohort Matching</h3>
-          <p>Your patient population is matched against active trials without PHI ever leaving your system. AI identifies eligible cohorts using de-identified records only.</p>
+          <p class="feature-desc">Your patient population is matched against active trials without PHI ever leaving your system. AI identifies eligible cohorts using de-identified records only.</p>
           <div class="feature-stat">PHI never leaves your network</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>Outcome Feedback Loop</h3>
-          <p>See what happens to the patients you refer. Structured outcome summaries are returned after trial completion — closing the loop on continuity of care.</p>
+          <p class="feature-desc">See what happens to the patients you refer. Structured outcome summaries are returned after trial completion — closing the loop on continuity of care.</p>
           <div class="feature-stat">Closed-loop continuity</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>Referral Revenue Stream</h3>
-          <p>Generate new revenue from a population you already serve. Fair-market-value compensation for chart review, screening coordination, and outreach.</p>
+          <p class="feature-desc">Generate new revenue from a population you already serve. Fair-market-value compensation for chart review, screening coordination, and outreach.</p>
           <div class="feature-stat">FMV-compliant referral fees</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card service">
           <span class="feature-tag">Service</span>
           <h3>Trial Discovery for Patients</h3>
-          <p>Equip your physicians with a tool to find relevant trials at the point of care. Match patient diagnosis and history against open studies in seconds.</p>
+          <p class="feature-desc">Equip your physicians with a tool to find relevant trials at the point of care. Match patient diagnosis and history against open studies in seconds.</p>
           <div class="feature-stat">Point-of-care match</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card service">
           <span class="feature-tag">Service</span>
           <h3>Consent &amp; Coordination</h3>
-          <p>Digital consent workflows, scheduling, and patient handoff to research sites. No new staff required — esslead handles the coordination.</p>
+          <p class="feature-desc">Digital consent workflows, scheduling, and patient handoff to research sites. No new staff required — esslead handles the coordination.</p>
           <div class="feature-stat">Zero workflow disruption</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card infra">
           <span class="feature-tag">Infrastructure</span>
           <h3>EMR-Native Integration</h3>
-          <p>Plugs into Epic, Cerner, athenahealth, and other systems you already use. No data migration. No parallel database. No new logins.</p>
+          <p class="feature-desc">Plugs into Epic, Cerner, athenahealth, and other systems you already use. No data migration. No parallel database. No new logins.</p>
           <div class="feature-stat">Works with what you have</div>
+          <span class="expand-indicator">+</span>
         </div>
       </div>
     </div>
@@ -1051,38 +1296,44 @@
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>AI-Powered Trial Insights</h3>
-          <p>Real-time recruitment performance, screen failure analysis, and site benchmarking across your entire portfolio. The dashboard CTMS has been promising for 20 years.</p>
+          <p class="feature-desc">Real-time recruitment performance, screen failure analysis, and site benchmarking across your entire portfolio. The dashboard CTMS has been promising for 20 years.</p>
           <div class="feature-stat">Live portfolio intelligence</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>Trial Site Matching</h3>
-          <p>AI ranks sites by actual patient pool fit, historical enrollment velocity, and protocol match. Replaces manual feasibility studies with network-scale data.</p>
+          <p class="feature-desc">AI ranks sites by actual patient pool fit, historical enrollment velocity, and protocol match. Replaces manual feasibility studies with network-scale data.</p>
           <div class="feature-stat">Network-scale feasibility</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>Protocol Improvement Engine</h3>
-          <p>Identify eligibility criteria likely to slow enrollment before activation. Cross-network analysis of historical trial outcomes flags amendable protocol elements.</p>
+          <p class="feature-desc">Identify eligibility criteria likely to slow enrollment before activation. Cross-network analysis of historical trial outcomes flags amendable protocol elements.</p>
           <div class="feature-stat">Pre-activation protocol QA</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>In-Silico Trial Optimization</h3>
-          <p>Run synthetic trial simulations against de-identified network cohorts before activating sites. Test protocol amendments without burning real screen failures.</p>
+          <p class="feature-desc">Run synthetic trial simulations against de-identified network cohorts before activating sites. Test protocol amendments without burning real screen failures.</p>
           <div class="feature-stat">Simulate before you activate</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card service">
           <span class="feature-tag">Service</span>
           <h3>Enrollment Velocity Forecasting</h3>
-          <p>Predict enrollment timelines before contracts are signed. Cross-network historical data delivers actuarial-grade enrollment forecasts.</p>
+          <p class="feature-desc">Predict enrollment timelines before contracts are signed. Cross-network historical data delivers actuarial-grade enrollment forecasts.</p>
           <div class="feature-stat">Forecast before contract</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card service">
           <span class="feature-tag">Service</span>
           <h3>Real-Time Performance Reporting</h3>
-          <p>Aggregate, structured reporting across every site running your trial. No more chasing weekly status reports from CRAs.</p>
+          <p class="feature-desc">Aggregate, structured reporting across every site running your trial. No more chasing weekly status reports from CRAs.</p>
           <div class="feature-stat">Always-on visibility</div>
+          <span class="expand-indicator">+</span>
         </div>
       </div>
     </div>
@@ -1093,26 +1344,30 @@
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>Trial Discovery</h3>
-          <p>Find clinical trials matched to your medical history, not just your zip code. AI matching based on full chart context, not just diagnosis codes.</p>
+          <p class="feature-desc">Find clinical trials matched to your medical history, not just your zip code. AI matching based on full chart context, not just diagnosis codes.</p>
           <div class="feature-stat">Matched to your history</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>Digital Scheduling &amp; E-Consent</h3>
-          <p>Schedule visits, sign consent forms, get visit reminders — all in one place. Multilingual support and accessibility built in from day one.</p>
+          <p class="feature-desc">Schedule visits, sign consent forms, get visit reminders — all in one place. Multilingual support and accessibility built in from day one.</p>
           <div class="feature-stat">All in one place</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card module">
           <span class="feature-tag">Module</span>
           <h3>Payment &amp; Reimbursement Tracking</h3>
-          <p>Track stipends, mileage, and reimbursements in real time. Transparent payment timelines — no more wondering when or whether you'll be paid.</p>
+          <p class="feature-desc">Track stipends, mileage, and reimbursements in real time. Transparent payment timelines — no more wondering when or whether you'll be paid.</p>
           <div class="feature-stat">Transparent payments</div>
+          <span class="expand-indicator">+</span>
         </div>
         <div class="feature-card service">
           <span class="feature-tag">Service</span>
           <h3>Outcome Updates &amp; Care Continuity</h3>
-          <p>Receive structured updates on trial outcomes and ongoing care continuity. Your participation contributes to the next match for the next patient.</p>
+          <p class="feature-desc">Receive structured updates on trial outcomes and ongoing care continuity. Your participation contributes to the next match for the next patient.</p>
           <div class="feature-stat">Closing the loop</div>
+          <span class="expand-indicator">+</span>
         </div>
       </div>
     </div>
@@ -1120,29 +1375,29 @@
   </div>
 </section>
 
-<!-- Stats strip -->
+<!-- Network section -->
 <section class="section">
   <div class="container">
-    <div class="section-eyebrow">Network Scale</div>
-    <h2>Built to compound.</h2>
-    <p class="section-sub">Every layer of the platform makes every other layer more valuable. The network effects are structural, not promotional.</p>
+    <div class="section-eyebrow">The Network</div>
+    <h2>Clinical trials, connected<span class="accent">.</span></h2>
+    <p class="section-sub">esslead is not a tool sold to one customer. It is a network that gets more valuable as it grows. Fills trials faster. Finds sites that fit. Turns patient populations into research access. <span class="accent">Helps patients discover trials that could change their lives.</span> </p>
 
     <div class="stats-strip">
       <div class="stat">
-        <div class="stat-val">10×</div>
-        <div class="stat-label">Faster patient-to-trial matching</div>
+        <div class="stat-val">3-sided</div>
+        <div class="stat-label">Patients · Sites · Sponsors</div>
       </div>
       <div class="stat">
-        <div class="stat-val">Network-scale</div>
-        <div class="stat-label">Site-sponsor feasibility</div>
+        <div class="stat-val">5 sources</div>
+        <div class="stat-label">Practices, hospitals, advocacy groups, pharmacies, self-enrollment</div>
       </div>
       <div class="stat">
-        <div class="stat-val">Compounding</div>
-        <div class="stat-label">Data flywheel from day one</div>
+        <div class="stat-val">1 engine</div>
+        <div class="stat-label">Every match makes the next match smarter</div>
       </div>
       <div class="stat">
-        <div class="stat-val">AI-ready</div>
-        <div class="stat-label">Architecture for in-silico trials</div>
+        <div class="stat-val">Day-one ready</div>
+        <div class="stat-label">Architecture built for AI trial simulation from launch</div>
       </div>
     </div>
   </div>
@@ -1152,32 +1407,118 @@
 <section class="section" id="vision">
   <div class="container">
     <div class="section-eyebrow">The Vision</div>
-    <h2>esslead is not a CTMS. It is clinical trial recruitment infrastructure.</h2>
-    <p class="section-sub">An intelligence engine connecting patients, sites, and sponsors — designed to compound in value as data accumulates across the network.</p>
+    <h2>The network we build today is the dataset that runs tomorrow's trials.</h2>
+    <p class="section-sub">Every de-identified match, every screen failure, every protocol amendment becomes training data for a model that one day runs trials in silico, testing protocols against synthetic cohorts before a single patient is screened.</p>
 
     <div class="vision-diagram">
-      <div class="vision-band band-gray">
-        <div class="vision-band-title">Intake Layer</div>
-        <div class="vision-band-sub">Practices · Hospitals · Advocacy Groups · SMOs · Patients</div>
-      </div>
-      <div class="vision-arrow">▼</div>
-      <div class="vision-band band-green">
-        <div class="vision-band-title">Intelligence Engine — esslead Core IP</div>
-        <div class="vision-band-sub">Protocol Parsing · AI Matching · Predictive Enrollment · Site-Sponsor Feasibility</div>
-      </div>
-      <div class="vision-arrow">▼</div>
-      <div class="vision-band band-gray">
-        <div class="vision-band-title">Distribution Layer</div>
-        <div class="vision-band-sub">SMOs/Sites · Sponsors/CROs · Patients</div>
-      </div>
-      <div class="vision-arrow">▼</div>
-      <div class="vision-band band-ghost">
-        <div class="vision-band-title">Data-Powered Intelligence Layer</div>
-        <div class="vision-band-sub">AI Trial Simulation · In-Silico Trials · Protocol Optimization · Synthetic Cohorts</div>
-      </div>
+      <svg viewBox="0 0 1000 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="esslead platform architecture diagram">
+
+        <defs>
+          <marker id="arrowhead-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#0DA562"/>
+          </marker>
+          <marker id="arrowhead-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#1A1A1A"/>
+          </marker>
+          <marker id="arrowhead-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#7C3AED"/>
+          </marker>
+          <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.08"/>
+          </filter>
+          <filter id="softShadowLg" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.10"/>
+          </filter>
+        </defs>
+
+       <g font-family="Geist, sans-serif" font-size="14" font-weight="700" fill="#1A1A1A">
+          <g class="vd-node">
+            <rect x="20"  y="40" width="170" height="70" rx="10" fill="#FFFFFF" fill-opacity="0.5" stroke="#E5E3DB" stroke-width="2"/>
+            <text x="105" y="68" text-anchor="middle" pointer-events="none">Practices</text>
+            <text x="105" y="90" text-anchor="middle" font-size="11" font-weight="400" fill="#888888" pointer-events="none">Established care</text>
+          </g>
+          <g class="vd-node">
+            <rect x="210" y="40" width="170" height="70" rx="10" fill="#FFFFFF" fill-opacity="0.5" stroke="#E5E3DB" stroke-width="2"/>
+            <text x="295" y="68" text-anchor="middle" pointer-events="none">Hospitals</text>
+            <text x="295" y="90" text-anchor="middle" font-size="11" font-weight="400" fill="#888888" pointer-events="none">Acute &amp; complex cases</text>
+          </g>
+          <g class="vd-node">
+            <rect x="400" y="40" width="200" height="70" rx="10" fill="#FFFFFF" fill-opacity="0.5" stroke="#E5E3DB" stroke-width="2"/>
+            <text x="500" y="68" text-anchor="middle" pointer-events="none">Advocacy groups</text>
+            <text x="500" y="90" text-anchor="middle" font-size="11" font-weight="400" fill="#888888" pointer-events="none">Disease-engaged communities</text>
+          </g>
+          <g class="vd-node">
+            <rect x="620" y="40" width="170" height="70" rx="10" fill="#FFFFFF" fill-opacity="0.5" stroke="#E5E3DB" stroke-width="2"/>
+            <text x="705" y="68" text-anchor="middle" pointer-events="none">Pharmacies</text>
+            <text x="705" y="90" text-anchor="middle" font-size="11" font-weight="400" fill="#888888" pointer-events="none">Active medication populations</text>
+          </g>
+          <g class="vd-node">
+            <rect x="810" y="40" width="170" height="70" rx="10" fill="#FFFFFF" fill-opacity="0.5" stroke="#E5E3DB" stroke-width="2"/>
+            <text x="895" y="68" text-anchor="middle" pointer-events="none">SMOs / patients</text>
+            <text x="895" y="90" text-anchor="middle" font-size="11" font-weight="400" fill="#888888" pointer-events="none">Active research participants</text>
+          </g>
+        </g>
+
+        <g stroke="#0DA562" stroke-width="1.5" fill="none" marker-end="url(#arrowhead-green)" opacity="0.55">
+          <path d="M 105 110 Q 105 145, 320 200"/>
+          <path d="M 295 110 Q 295 155, 400 200"/>
+          <path d="M 500 110 L 500 200"/>
+          <path d="M 705 110 Q 705 155, 600 200"/>
+          <path d="M 895 110 Q 895 145, 680 200"/>
+        </g>
+
+        <g class="vd-node">
+          <rect x="120" y="200" width="760" height="120" rx="14" fill="#EBFBF3" fill-opacity="0.7" stroke="#0DA562" stroke-width="2"/>
+          <text x="500" y="248" text-anchor="middle" font-family="Geist, sans-serif" font-size="20" font-weight="700" fill="#0DA562" pointer-events="none">Intelligence engine — esslead core IP</text>
+          <text x="500" y="280" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="15" fill="#0DA562" opacity="0.75" pointer-events="none">Every match makes the next match smarter</text>
+        </g>
+
+        <g stroke="#1A1A1A" stroke-width="1.5" fill="none" marker-end="url(#arrowhead-ink)" opacity="0.55">
+          <path d="M 350 320 L 200 410"/>
+          <path d="M 500 320 L 500 410"/>
+          <path d="M 650 320 L 800 410"/>
+        </g>
+
+        <g font-family="Geist, sans-serif">
+          <g class="vd-node">
+            <rect x="40"  y="410" width="280" height="120" rx="12" fill="#FFFFFF" fill-opacity="0.5" stroke="#E5E3DB" stroke-width="2"/>
+            <text x="60"  y="442" font-size="16" font-weight="700" fill="#1A1A1A" pointer-events="none">SMOs / sites</text>
+            <text x="60"  y="475" font-size="13" fill="#555555" pointer-events="none">Full CTMS + coordinator tools</text>
+            <text x="60"  y="498" font-size="13" fill="#555555" pointer-events="none">Recruitment pipeline + payments</text>
+          </g>
+          <g class="vd-node">
+            <rect x="360" y="410" width="280" height="120" rx="12" fill="#FFFFFF" fill-opacity="0.5" stroke="#E5E3DB" stroke-width="2"/>
+            <text x="380" y="442" font-size="16" font-weight="700" fill="#1A1A1A" pointer-events="none">Sponsors / CROs</text>
+            <text x="380" y="475" font-size="13" fill="#555555" pointer-events="none">Feasibility reports</text>
+            <text x="380" y="498" font-size="13" fill="#555555" pointer-events="none">Site matching + velocity</text>
+          </g>
+          <g class="vd-node">
+            <rect x="680" y="410" width="280" height="120" rx="12" fill="#FFFFFF" fill-opacity="0.5" stroke="#E5E3DB" stroke-width="2"/>
+            <text x="700" y="442" font-size="16" font-weight="700" fill="#1A1A1A" pointer-events="none">Patients</text>
+            <text x="700" y="475" font-size="13" fill="#555555" pointer-events="none">Trial discovery + consent</text>
+            <text x="700" y="498" font-size="13" fill="#555555" pointer-events="none">Scheduling + compensation</text>
+          </g>
+        </g>
+
+        <g stroke="#7C3AED" stroke-width="1.5" fill="none" marker-end="url(#arrowhead-purple)" opacity="0.6" stroke-dasharray="4 4">
+          <path d="M 180 530 L 180 580"/>
+          <path d="M 500 530 L 500 580"/>
+          <path d="M 820 530 L 820 580"/>
+        </g>
+
+        <g class="vd-node">
+          <rect x="40" y="580" width="920" height="120" rx="12" fill="#F3F0FE" fill-opacity="0.7" stroke="#7C3AED" stroke-width="2"/>
+          <text x="500" y="616" text-anchor="middle" font-family="Geist, sans-serif" font-size="18" font-weight="700" fill="#7C3AED" pointer-events="none">Generative research layer</text>
+          <text x="500" y="646" text-anchor="middle" font-family="Geist, sans-serif" font-size="13" fill="#7C3AED" opacity="0.85" pointer-events="none">In-silico trial execution · Synthetic cohort generation · Protocol design optimization</text>
+          <text x="500" y="675" text-anchor="middle" font-family="Geist, sans-serif" font-size="12" font-style="italic" fill="#7C3AED" opacity="0.7" pointer-events="none">Proprietary models trained on de-identified network outcomes — unlocked at scale</text>
+        </g>
+      </svg>
     </div>
 
-    <p class="vision-quote">"Every patient match makes the next match smarter."</p>
+    <p class="vision-caption">
+      <strong>The first three layers are <span class="vc-product">the product</span>. The fourth layer is <span class="vc-asset">the asset</span>. Each match made today trains the network for the trials of tomorrow.</strong>
+    </p>
+
   </div>
 </section>
 
@@ -1482,6 +1823,17 @@
   });
   document.getElementById('pane-' + tabId).classList.add('active');
 }
+
+function toggleFeatureCard(card) {
+  card.classList.toggle('expanded');
+}
+
+// Attach click handlers to all feature cards
+document.querySelectorAll('.feature-card').forEach(function(card) {
+  card.addEventListener('click', function() {
+    toggleFeatureCard(card);
+  });
+});
 </script>
 
 </body>
